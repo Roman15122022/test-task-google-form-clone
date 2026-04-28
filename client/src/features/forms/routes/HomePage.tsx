@@ -15,7 +15,6 @@ export const HomePage = () => {
         <div>
           <p className="eyebrow">Google Forms Lite</p>
           <h1>Build forms, collect answers, review responses.</h1>
-          <p>A small in-memory GraphQL app with typed client and server contracts.</p>
         </div>
         <Link className="button button-primary" to="/forms/new">
           <Plus aria-hidden="true" size={18} />

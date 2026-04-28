@@ -7,6 +7,15 @@ import { useCreateFormMutation } from '@app/api/formsApi';
 import { PageShell } from '../components/PageShell';
 import { QuestionEditor } from '../components/QuestionEditor';
 import { useFormBuilder } from '../hooks/useFormBuilder';
+import {
+  alertPanel,
+  fieldLabel,
+  ghostButton,
+  panel,
+  primaryButton,
+  secondaryButton,
+  textInput,
+} from '../uiClasses';
 import { validateBuilderState, toQuestionInputs } from '../utils/builderValidation';
 import { questionTypeOptions } from '../utils/questionTypes';
 
@@ -43,21 +52,21 @@ export const FormBuilderPage = () => {
       title="Create a new form"
       description="Compose questions and save the form to the in-memory GraphQL store."
     >
-      <form className="builder-layout" onSubmit={(event) => void handleSubmit(event)}>
-        <section className="content-panel builder-panel">
-          <label className="field-label">
+      <form className="grid gap-5" onSubmit={(event) => void handleSubmit(event)}>
+        <section className={`${panel} grid gap-4`}>
+          <label className={fieldLabel}>
             Form title
             <input
-              className="text-input title-input"
+              className={`${textInput} text-2xl font-extrabold`}
               placeholder="Untitled form"
               value={builder.title}
               onChange={(event) => formBuilder.setTitle(event.target.value)}
             />
           </label>
-          <label className="field-label">
+          <label className={fieldLabel}>
             Description
             <textarea
-              className="text-input textarea-input"
+              className={`${textInput} min-h-24 resize-y`}
               placeholder="Describe what this form is for"
               value={builder.description}
               onChange={(event) => formBuilder.setDescription(event.target.value)}
@@ -66,14 +75,16 @@ export const FormBuilderPage = () => {
         </section>
 
         {errors.length > 0 ? (
-          <section className="alert-list" role="alert">
+          <section className={alertPanel} role="alert">
             {errors.map((error) => (
-              <p key={error}>{error}</p>
+              <p className="m-0" key={error}>
+                {error}
+              </p>
             ))}
           </section>
         ) : null}
 
-        <section className="question-list">
+        <section className="grid gap-4">
           {builder.questions.map((question, index) => (
             <QuestionEditor
               canRemove={builder.questions.length > 1}
@@ -91,11 +102,11 @@ export const FormBuilderPage = () => {
           ))}
         </section>
 
-        <section className="builder-actions">
-          <div className="add-question-group">
+        <section className="flex flex-col items-stretch justify-between gap-4 lg:flex-row lg:items-center">
+          <div className="flex flex-wrap items-center gap-2.5">
             {questionTypeOptions.map((option) => (
               <button
-                className="button button-secondary"
+                className={secondaryButton}
                 key={option.value}
                 type="button"
                 title={option.helper}
@@ -106,15 +117,11 @@ export const FormBuilderPage = () => {
               </button>
             ))}
           </div>
-          <div className="submit-actions">
-            <Link className="button button-ghost" to="/">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <Link className={ghostButton} to="/">
               Cancel
             </Link>
-            <button
-              className="button button-primary"
-              disabled={createFormState.isLoading}
-              type="submit"
-            >
+            <button className={primaryButton} disabled={createFormState.isLoading} type="submit">
               <Save aria-hidden="true" size={16} />
               {createFormState.isLoading ? 'Saving...' : 'Save form'}
             </button>

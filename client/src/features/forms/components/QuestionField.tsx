@@ -1,5 +1,6 @@
 import type { QuestionFieldsFragment } from '@app/api/generated';
 
+import { textInput } from '../uiClasses';
 import type { AnswerDraft } from '../utils/answerDrafts';
 
 interface QuestionFieldProps {
@@ -19,15 +20,15 @@ export const QuestionField = ({
   const values = draft?.values ?? [];
 
   return (
-    <fieldset className="fill-question">
-      <legend>
+    <fieldset className="grid gap-3 rounded-lg border border-slate-200 p-5">
+      <legend className="px-2 font-extrabold">
         {question.title}
-        {question.required ? <span className="required-mark">*</span> : null}
+        {question.required ? <span className="ml-1 text-orange-700">*</span> : null}
       </legend>
 
       {question.type === 'TEXT' ? (
         <input
-          className="text-input"
+          className={textInput}
           placeholder="Your answer"
           value={value}
           onChange={(event) => onValueChange(question.id, event.target.value)}
@@ -36,7 +37,7 @@ export const QuestionField = ({
 
       {question.type === 'DATE' ? (
         <input
-          className="text-input"
+          className={textInput}
           type="date"
           value={value}
           onChange={(event) => onValueChange(question.id, event.target.value)}
@@ -44,10 +45,11 @@ export const QuestionField = ({
       ) : null}
 
       {question.type === 'MULTIPLE_CHOICE' ? (
-        <div className="choice-stack">
+        <div className="grid gap-2.5">
           {question.options.map((option) => (
-            <label className="choice-row" key={option}>
+            <label className="inline-flex items-center gap-2 text-slate-700" key={option}>
               <input
+                className="size-4 accent-blue-600"
                 checked={value === option}
                 name={question.id}
                 type="radio"
@@ -61,10 +63,11 @@ export const QuestionField = ({
       ) : null}
 
       {question.type === 'CHECKBOX' ? (
-        <div className="choice-stack">
+        <div className="grid gap-2.5">
           {question.options.map((option) => (
-            <label className="choice-row" key={option}>
+            <label className="inline-flex items-center gap-2 text-slate-700" key={option}>
               <input
+                className="size-4 accent-blue-600"
                 checked={values.includes(option)}
                 type="checkbox"
                 value={option}

@@ -7,6 +7,7 @@ import { useFormQuery, useSubmitResponseMutation } from '@app/api/formsApi';
 import { PageShell } from '../components/PageShell';
 import { QuestionField } from '../components/QuestionField';
 import { EmptyState, ErrorState, LoadingState } from '../components/StatusState';
+import { alertPanel, panel, primaryButton, secondaryButton } from '../uiClasses';
 import {
   createInitialAnswerDrafts,
   serializeAnswerDrafts,
@@ -77,19 +78,24 @@ export const FormFillerPage = () => {
 
   return (
     <PageShell eyebrow="Fill form" title={form.title} description={form.description ?? undefined}>
-      <form className="content-panel fill-layout" onSubmit={(event) => void handleSubmit(event)}>
+      <form className={`${panel} grid gap-5`} onSubmit={(event) => void handleSubmit(event)}>
         {errors.length > 0 ? (
-          <section className="alert-list" role="alert">
+          <section className={alertPanel} role="alert">
             {errors.map((validationError) => (
-              <p key={validationError}>{validationError}</p>
+              <p className="m-0" key={validationError}>
+                {validationError}
+              </p>
             ))}
           </section>
         ) : null}
 
         {submitted ? (
-          <section className="success-panel" role="status">
-            <h2>Form submitted successfully.</h2>
-            <Link className="button button-secondary" to="/">
+          <section
+            className="flex flex-col items-stretch justify-between gap-4 rounded-lg bg-emerald-50 p-5 text-emerald-700 sm:flex-row sm:items-center"
+            role="status"
+          >
+            <h2 className="m-0 text-xl font-extrabold">Form submitted successfully.</h2>
+            <Link className={secondaryButton} to="/">
               Back to forms
             </Link>
           </section>
@@ -110,7 +116,7 @@ export const FormFillerPage = () => {
             ))}
 
             <button
-              className="button button-primary submit-button"
+              className={`${primaryButton} justify-self-start`}
               disabled={submitResponseState.isLoading}
               type="submit"
             >

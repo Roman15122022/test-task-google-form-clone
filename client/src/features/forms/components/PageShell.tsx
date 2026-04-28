@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom';
 
+import {
+  headingEyebrow,
+  pageContent,
+  pageDescription,
+  pageFrame,
+  pageTitle,
+  primaryButton,
+} from '../uiClasses';
+
 interface PageShellProps {
   eyebrow?: string;
   title: string;
@@ -12,19 +21,21 @@ interface PageShellProps {
 }
 
 export const PageShell = ({ action, children, description, eyebrow, title }: PageShellProps) => (
-  <main className="page-shell">
-    <header className="page-header">
-      <div>
-        {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-        <h1>{title}</h1>
-        {description ? <p className="page-description">{description}</p> : null}
-      </div>
-      {action ? (
-        <Link className="button button-primary" to={action.to}>
-          {action.label}
-        </Link>
-      ) : null}
-    </header>
-    {children}
+  <main className={pageFrame}>
+    <div className={pageContent}>
+      <header className="mb-6 flex flex-col items-stretch gap-6 md:flex-row md:items-end md:justify-between">
+        <div>
+          {eyebrow ? <p className={headingEyebrow}>{eyebrow}</p> : null}
+          <h1 className={pageTitle}>{title}</h1>
+          {description ? <p className={pageDescription}>{description}</p> : null}
+        </div>
+        {action ? (
+          <Link className={primaryButton} to={action.to}>
+            {action.label}
+          </Link>
+        ) : null}
+      </header>
+      {children}
+    </div>
   </main>
 );

@@ -4,6 +4,7 @@ import { useFormQuery, useResponsesQuery } from '@app/api/formsApi';
 
 import { PageShell } from '../components/PageShell';
 import { EmptyState, ErrorState, LoadingState } from '../components/StatusState';
+import { panel, secondaryButton } from '../uiClasses';
 import { formatAnswer } from '../utils/answerDrafts';
 
 export const FormResponsesPage = () => {
@@ -51,7 +52,7 @@ export const FormResponsesPage = () => {
       title={form.title}
       description={`${responses.length} submitted response${responses.length === 1 ? '' : 's'}`}
     >
-      <section className="content-panel responses-layout">
+      <section className={`${panel} grid gap-5`}>
         {responses.length === 0 ? (
           <EmptyState
             title="No responses yet"
@@ -59,19 +60,25 @@ export const FormResponsesPage = () => {
           />
         ) : (
           responses.map((response) => (
-            <article className="response-card" key={response.id}>
-              <header>
-                <h2>Response</h2>
+            <article
+              className="grid gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-panel"
+              key={response.id}
+            >
+              <header className="flex items-center justify-between gap-4 text-slate-500">
+                <h2 className="m-0 text-xl font-extrabold text-slate-950">Response</h2>
                 <span>{new Date(response.submittedAt).toLocaleString()}</span>
               </header>
-              <dl className="response-answers">
+              <dl className="m-0 grid gap-2.5">
                 {form.questions.map((question) => {
                   const answer = response.answers.find((item) => item.questionId === question.id);
 
                   return (
-                    <div key={question.id}>
-                      <dt>{question.title}</dt>
-                      <dd>{formatAnswer(question, answer)}</dd>
+                    <div
+                      className="grid gap-2 border-t border-slate-200 pt-2.5 md:grid-cols-[minmax(180px,280px)_1fr]"
+                      key={question.id}
+                    >
+                      <dt className="font-bold text-slate-500">{question.title}</dt>
+                      <dd className="m-0">{formatAnswer(question, answer)}</dd>
                     </div>
                   );
                 })}
@@ -79,7 +86,7 @@ export const FormResponsesPage = () => {
             </article>
           ))
         )}
-        <Link className="button button-secondary" to="/">
+        <Link className={`${secondaryButton} justify-self-start`} to="/">
           Back to forms
         </Link>
       </section>

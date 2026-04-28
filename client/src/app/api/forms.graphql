@@ -1,0 +1,58 @@
+fragment QuestionFields on Question {
+  id
+  title
+  type
+  required
+  options
+}
+
+fragment FormFields on Form {
+  id
+  title
+  description
+  createdAt
+  questions {
+    ...QuestionFields
+  }
+}
+
+fragment ResponseFields on Response {
+  id
+  formId
+  submittedAt
+  answers {
+    questionId
+    value
+    values
+  }
+}
+
+query Forms {
+  forms {
+    ...FormFields
+  }
+}
+
+query Form($id: ID!) {
+  form(id: $id) {
+    ...FormFields
+  }
+}
+
+query Responses($formId: ID!) {
+  responses(formId: $formId) {
+    ...ResponseFields
+  }
+}
+
+mutation CreateForm($title: String!, $description: String, $questions: [QuestionInput!]) {
+  createForm(title: $title, description: $description, questions: $questions) {
+    ...FormFields
+  }
+}
+
+mutation SubmitResponse($formId: ID!, $answers: [AnswerInput!]!) {
+  submitResponse(formId: $formId, answers: $answers) {
+    ...ResponseFields
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@google-forms-lite/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm run build && node dist/index.js",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@google-forms-lite/shared": "1.0.0",
+    "graphql": "^16.11.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.4"
+  }
+}

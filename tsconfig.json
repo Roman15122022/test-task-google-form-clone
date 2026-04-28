@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["codegen.ts"],
+  "references": [
+    {
+      "path": "./shared"
+    },
+    {
+      "path": "./server"
+    },
+    {
+      "path": "./client"
+    }
+  ]
+}

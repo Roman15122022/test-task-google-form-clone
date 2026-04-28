@@ -1,0 +1,41 @@
+{
+  "name": "google-forms-lite-clone",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w shared && npm run build -w server && npm run build -w client",
+    "typecheck": "npm run build -w shared && npm run typecheck -w server && npm run typecheck -w client",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm test -ws --if-present",
+    "codegen": "graphql-codegen --config codegen.ts && prettier --write shared/src/generated/graphql.ts server/src/generated/resolvers.ts client/src/app/api/generated.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.0",
+    "@graphql-codegen/typescript-resolvers": "^4.5.0",
+    "@graphql-codegen/typescript-rtk-query": "^3.1.1",
+    "@types/node": "^22.15.2",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.25.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.0",
+    "vitest": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
